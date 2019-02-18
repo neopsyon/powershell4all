@@ -9,7 +9,7 @@ We are hosting the main project on the GitHub link: https://github.com/nemanja-j
 
 The script is still in its early and fresh stage, we are planning to add many functionalities related to many Microsoft technologies.
 
-If you notice any bugs or you have any advice for improvements, please contact us!
+If you notice any bugs or you have any advice for improvements, please advice us!
 
 
 
