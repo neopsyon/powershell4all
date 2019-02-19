@@ -1,3 +1,7 @@
+<#
+    # TO DO
+    Write a help for all of the functions and all of the parameters.
+#>
 #Get public and private function definition files.
     $Public  = @( Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction SilentlyContinue )
     $Private = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue )
