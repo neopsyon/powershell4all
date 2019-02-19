@@ -1,0 +1,2 @@
+Copy the whole directory to one of your $env:PSModulePath paths.
+The module is divided into private and public functions, private functions are just helper functions and they are not being exported or visible on the surface.
