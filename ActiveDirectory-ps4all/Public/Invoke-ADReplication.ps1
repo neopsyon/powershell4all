@@ -14,7 +14,6 @@ Function Invoke-ADReplication {
         $DomainController
     )
     process {
-        Import-RequiredModule -ModuleName ActiveDirectory
         if ($PSCmdlet.ParameterSetName -eq "All") {
         $DomainControllers = (Get-ADDomainController -filter *).name
         $LastRepTime = (Get-ADReplicationUpToDatenessVectorTable -Target $DomainControllers[0]).LastReplicationSuccess[0]

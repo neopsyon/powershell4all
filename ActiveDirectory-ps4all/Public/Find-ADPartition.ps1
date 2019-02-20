@@ -8,7 +8,6 @@ Function Find-ADPartition {
         [string]$PartitionName
     )
     Process {
-        Import-RequiredModule -ModuleName ActiveDirectory
         $Partitionlist = (Get-ADDomainController -Filter * | Select-Object -First 1).partitions
         if ($PartitionName -eq "Root") {
             $Partitionlist | Where-Object {$_ -eq "DC=$($env:USERDNSDOMAIN.split(".")[0]),DC=$($env:USERDNSDOMAIN.split(".")[1])"}
