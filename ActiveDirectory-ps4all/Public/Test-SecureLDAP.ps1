@@ -15,7 +15,6 @@ Function Test-SecureLDAP {
         $DomainController
     )
     process {
-        Import-RequiredModule -ModuleName ActiveDirectory
         Function Test-LDAPS {
             param (
                 [parameter(Mandatory=$true)]
