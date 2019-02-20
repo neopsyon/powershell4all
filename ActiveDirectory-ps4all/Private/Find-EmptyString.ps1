@@ -15,8 +15,7 @@ Function Find-EmptyString {
         [string]$Action
     )
     process {
-        $Stringtest = [string]::IsNullOrEmpty("$VariableName")
-        if ($true -eq $Stringtest) {
+        if ($true -eq [string]::IsNullOrWhiteSpace("$VariableName")) {
             Write-Error -Message "$ErrorOut" -ErrorAction $Action
         }
     }
