@@ -15,7 +15,6 @@ Function Get-ADSiteDetail {
         $SiteName
     )
     process {
-        Import-RequiredModule -ModuleName ActiveDirectory
         if ($psCmdlet.ParameterSetName -eq "All") {
         $SiteList = [System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest().sites
         $SiteDetails = New-Object System.Collections.ArrayList
