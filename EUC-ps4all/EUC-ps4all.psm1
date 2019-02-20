@@ -1,4 +1,3 @@
-#Requires -RunAsAdministrator
 <#
     # TO DO
     Write a help for all of the functions and all of the parameters.
