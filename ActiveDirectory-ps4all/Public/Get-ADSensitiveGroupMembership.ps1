@@ -44,9 +44,12 @@ Function Get-ADSensitiveGroupMembership {
             }
         }
         if ($PSCmdlet.ParameterSetName -eq "All") {
+            $Groupedobjects = New-Object System.Collections.ArrayList
             foreach ($Group in $GroupList) {
-                Get-Membership -Group $Group
+                $Getit = Get-Membership -Group $Group
+                $Groupedobjects += $Getit
             }
+            $Groupedobjects
         }
         elseif ($PSCmdlet.ParameterSetName -eq "GroupName") {
             foreach ($Group in $GroupList) {
