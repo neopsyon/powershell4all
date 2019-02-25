@@ -28,7 +28,7 @@ Function Remove-UserProfile {
             # Check if the user has active sessions and kill them if any.
             [array]$SessionId = (quser /SERVER:$ComputerName 2>$null) | Select-String "$UserName " -ErrorAction Stop
             if ($true -eq [string]::IsNullOrWhiteSpace($SessionId)) {
-                Write-Output "No active sessions found for user $UserName on remote computer $ComputerName"
+                Write-Verbose "No active sessions found for user $UserName on remote computer $ComputerName"
             }
             else {
                 foreach ($Id in $SessionId) {
@@ -51,18 +51,43 @@ Function Remove-UserProfile {
             $ProfileList = Invoke-Command -ComputerName $ComputerName -ScriptBlock {
                 Get-ChildItem -Path "C:\Users" | Where-Object {$_.Name -eq $using:UserName -or $_.Name -eq "$using:UserName.$env:USERDOMAIN"}
             }
-            # If user profile is not found in registry and on Users path.
+            # If user profile is not found in registry and in Users path.
             if ($true -eq [string]::IsNullOrWhiteSpace($RegistryList) -and $true -eq [string]::IsNullOrWhiteSpace($ProfileList)) {
-                Write-Error "Cannot find user matching $UserName in registry or at the users profile path." -ErrorAction Stop
+                Write-Error "Cannot find user matching $UserName in registry or in the users profile path." -ErrorAction Stop
             }
-            # If user profile is not found in registry, but found on Users path.
+            # If user profile is not found in registry, but found in Users path.
             elseif ($true -eq [string]::IsNullOrWhiteSpace($RegistryList) -and $false -eq [string]::IsNullOrWhiteSpace($ProfileList)) {
-                Write-Output "User profile found on users profile path, but not in registry."
+                Write-Output "User profile found in users profile path, but not in registry."
                 foreach ($Profile in $ProfileList) {
                     Invoke-Command -ComputerName $ComputerName -ScriptBlock {
                         Remove-Item $($using:Profile.FullName) -Recurse -Force -Confirm:$false
                     } -ErrorAction Stop
                     Write-Output "Successfully removed user profile from path $($Profile.FullName)"
+                }
+            }
+            # If user profile is found in registry, but not in Users path.
+            elseif ($false -eq [string]::IsNullOrWhiteSpace($RegistryList) -and $true -eq [string]::IsNullOrWhiteSpace($ProfileList)) {
+                Write-Output "User profile found in registry, but not in Users path."
+                foreach ($Item in $RegistryList) {
+                    Invoke-Command -ComputerName $ComputerName -ScriptBlock {
+                        Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\$($using:Item.PSChildName)" -Recurse -Force -Confirm:$false
+                    } -ErrorAction Stop
+                    Write-Output "Successfully removed user profile from registry, SID - $($Item.PSChildName)"
+                }
+            }
+            # If user is found both in registry and Users path.
+            elseif ($false -eq [string]::IsNullOrWhiteSpace($RegistryList) -and $false -eq [string]::IsNullOrWhiteSpace($ProfileList)) {
+                foreach ($Profile in $ProfileList) {
+                    Invoke-Command -ComputerName $ComputerName -ScriptBlock {
+                        Remove-Item $($using:Profile.FullName) -Recurse -Force -Confirm:$false
+                    } -ErrorAction Stop
+                    Write-Output "Successfully removed user profile from path $($Profile.FullName)"
+                }
+                foreach ($Item in $RegistryList) {
+                    Invoke-Command -ComputerName $ComputerName -ScriptBlock {
+                        Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\$($using:Item.PSChildName)" -Recurse -Force -Confirm:$false
+                    } -ErrorAction Stop
+                    Write-Output "Successfully removed user profile from registry, SID - $($Item.PSChildName)"
                 }
             }
         }
