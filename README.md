@@ -21,9 +21,6 @@ Project Details:
 
 	Start Date: 02-05-2018
 
-	Version: 1
-
-
 Contact:
 
 	Skype: nemanja.jovic_1
