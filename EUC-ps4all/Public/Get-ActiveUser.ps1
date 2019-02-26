@@ -14,7 +14,7 @@ Function Get-ActiveUser {
             $Userlist = New-Object System.Collections.ArrayList
             foreach ($User in $GetUsers) {
                 $Username = ($User.substring(1)).split(" ")[0]
-                $Userlist += $Username
+                $Userlist.Add($Username)
             }
             $Finallist = [PSCustomObject]@{
                 Hostname = $ComputerName

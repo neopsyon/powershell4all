@@ -22,7 +22,7 @@ Function Publish-PTRRecords {
                 $LastOctet = $($FullAddress).Split(".")[3]
                 $Subnetwithdot = $($FullAddress).TrimEnd("$($LastOctet)")
                 $Subnet = $Subnetwithdot.TrimEnd(".")
-                $AggregatedSubnets += $Subnet
+                $AggregatedSubnets.Add($Subnet)
             }
             $AggregatedSubnets = $AggregatedSubnets | Select-Object -Unique
             foreach ($Member in $AggregatedSubnets) {
@@ -30,7 +30,7 @@ Function Publish-PTRRecords {
                 $OctetTwo = $Member.Split(".")[1]
                 $OctetThree = $Member.Split(".")[2]
                 $ReversedZone = "$($OctetThree)."+"$($OctetTwo)."+"$($OctetOne).in-addr.arpa"
-                $ReversedZones += $ReversedZone
+                $ReversedZones.Add($ReversedZone)
             }
             foreach ($PTRZone in $ReversedZones) {
                 $PTRZoneCheck = (Get-DnsServerZone -ComputerName $DomainController -Name $PTRZone -ErrorAction SilentlyContinue)

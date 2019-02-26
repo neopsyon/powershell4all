@@ -37,7 +37,7 @@ Function Remove-UserProfile {
         }
     }
     process {
-        $IdList = New-Object System.Collections.ArrayList
+        [System.Collections.ArrayList]$IdList = @()
         try {
             # Check if the user has active sessions and kill them if any.
             [array]$SessionId = (quser /SERVER:$ComputerName 2>$null) | Select-String "$UserName " -ErrorAction Stop
@@ -47,7 +47,7 @@ Function Remove-UserProfile {
             else {
                 foreach ($Id in $SessionId) {
                     $Id = ((($Id.ToString()).substring("1")) -replace ' {2,}', ",").split(",")[2]
-                    $IdList += $Id
+                    [void]$IdList.Add($Id)
                 }
                 foreach ($Id in $IdList) {
                     logoff $Id /SERVER:$ComputerName
