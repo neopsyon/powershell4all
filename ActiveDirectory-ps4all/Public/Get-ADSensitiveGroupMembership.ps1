@@ -37,7 +37,7 @@ Function Get-ADSensitiveGroupMembership {
                              GroupName = "$Group"
                              Members = $Members -join ","
                          }
-                         $GroupMembers += $TempObject
+                         [void]$GroupMembers.Add($TempObject)
                      }
                 }
                 $GroupMembers
@@ -47,7 +47,7 @@ Function Get-ADSensitiveGroupMembership {
             $Groupedobjects = New-Object System.Collections.ArrayList
             foreach ($Group in $GroupList) {
                 $Getit = Get-Membership -Group $Group
-                $Groupedobjects += $Getit
+                [void]$Groupedobjects.Add($Getit)
             }
             $Groupedobjects
         }

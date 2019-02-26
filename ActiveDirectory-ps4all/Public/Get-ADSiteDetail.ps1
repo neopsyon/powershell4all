@@ -24,7 +24,7 @@ Function Get-ADSiteDetail {
                 SiteLinks = $($Site.SiteLinks.Name) -join ','
                 SiteSubnets = $($Site.Subnets.Name) -join ','
             }
-            $SiteDetails += $TempObject
+            [void]$SiteDetails.Add($TempObject)
         }
         $SiteDetails | Format-Table -AutoSize -Wrap
         }
@@ -37,7 +37,7 @@ Function Get-ADSiteDetail {
                     SiteLinks = $($Site.SiteLinks.Name) -join ','
                     SiteSubnets = $($Site.Subnets.Name) -join ','
                 }
-                $SiteDetails += $TempObject
+                [void]$SiteDetails.Add($TempObject)
             }
             $SiteDetails | Format-Table -AutoSize -Wrap
         }
