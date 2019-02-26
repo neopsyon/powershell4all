@@ -21,7 +21,7 @@ Function Find-OrphanedComputer {
                     ComputerName = $($Computer.Name)
                     PasswordLastSet = $($Computer.PasswordLastSet)
                 }
-                $Orphanedlist.Add($TempObject)
+                [void]$Orphanedlist.Add($TempObject)
             }
             $Orphanedlist
         }
