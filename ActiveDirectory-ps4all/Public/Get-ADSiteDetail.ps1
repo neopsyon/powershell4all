@@ -2,13 +2,13 @@ Function Get-ADSiteDetail {
     [CmdletBinding(DefaultParameterSetName='All')]
     param (
         # Parameter to check all of the AD sites.
-        [Parameter(Mandatory=$false,
-        ParameterSetName='All')]
+        [Parameter(ParameterSetName='All')]
         [switch]$All,
         # Name of the specific AD site.
-        [Parameter(Mandatory=$false,
-        ParameterSetName='SiteName',
+        [Parameter(ParameterSetName='SiteName',
+        ValueFromPipelineByPropertyName=$true,
         Position=1)]
+        [Alias('Site','Name')]
         [ValidateNotNullOrEmpty()]
         [string]$SiteName
     )

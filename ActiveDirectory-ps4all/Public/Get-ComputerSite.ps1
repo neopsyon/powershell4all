@@ -2,9 +2,10 @@ Function Get-ComputerSite {
     [CmdletBinding()]
     param (
         # Name of the target computer.
-        [Parameter(Mandatory=$true,
-        Position=1)]
+        [Parameter(ValueFromPipelineByPropertyName=$true,
+        Position=0)]
         [ValidateNotNullOrEmpty()]
+        [Alias('Computer','Name')]
         [string]$ComputerName = $env:ComputerName
     )
     process {

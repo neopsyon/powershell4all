@@ -3,7 +3,9 @@ Function Find-ADPartition {
     [OutputType([string])]
     param (
         # Name of the partition that you want to find.
-        [Parameter(Mandatory=$true,ValueFromPipeline=$true,Position=0)]
+        [Parameter(Mandatory=$true,
+        ValueFromPipeline=$true,
+        Position=0)]
         [ValidateSet('Root','Configuration','Schema','ForestDNS','DomainDNS')]
         [string]$PartitionName
     )
