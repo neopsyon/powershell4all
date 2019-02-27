@@ -11,22 +11,28 @@ Function Publish-UserGroupMembership {
         [string]$DestinationUser
     )
     process {
-        $FindSource = (Get-ADUser -filter * | Where-Object {$_.SamAccountName -eq "$SourceUser"})
-        $FindDestination = (Get-ADUser -filter * | Where-Object {$_.SamAccountName -eq "$DestinationUser"})
+        $FindSource = (Get-ADUser -filter "SamAccountName -eq '$SourceUser'")
+        $FindDestination = (Get-ADUser -filter "SamAccountName -eq '$DestinationUser'")
         Find-EmptyString -VariableName $FindSource -ErrorOut "Cannot find an user object that matches name $SourceUser" -Action Stop
         Find-EmptyString -VariableName $FindSource -ErrorOut "Cannot find an user object that matches name $FindDestination" -Action Stop
-        $SourceGroups = (Get-ADPrincipalGroupMembership -Identity $($FindSource.SamAccountName)).Name | Sort-Object
+        $SourceUser = $($FindSource.SamAccountName)
+        $DestinationUser = $($FindDestination.SamAccountName)
+        $SourceGroups = (Get-ADPrincipalGroupMembership -Identity $SourceUser).Name | Sort-Object
         if ($true -eq [string]::IsNullOrWhiteSpace("$SourceGroups")) {
             Write-Output 'User is not member of any group.' -ErrorAction Stop
         }
-        $DestinationGroups = (Get-ADPrincipalGroupMembership -Identity $($FindDestination.SamAccountName)).Name | Sort-Object
-        $GroupDifference = (Compare-Object -ReferenceObject $SourceGroups -DifferenceObject $DestinationGroups).inputobject
+        $DestinationGroups = (Get-ADPrincipalGroupMembership -Identity $DestinationUser).Name | Sort-Object
+        $GroupDifference = (Compare-Object -ReferenceObject $SourceGroups -DifferenceObject $DestinationGroups)
         foreach ($Group in $GroupDifference) {
-            try {
-                Add-ADGroupMember -Identity "$Group" -Members $($FindDestination.SamAccountName)
-            }
-            catch {
-                Write-Error "$_" -ErrorAction Continue
+            if ($($Group.SideIndicator) -eq "<=") {
+                $GroupName = $($Group.InputObject)
+                try {
+                    Add-ADGroupMember -Identity "$GroupName" -Members "$DestinationUser" -ErrorAction Stop
+                    Write-Verbose "Adding user $DestinationUser to the group $GroupName"
+                }
+                catch {
+                    Write-Error "$_" -ErrorAction Stop
+                }
             }
         }
     }
