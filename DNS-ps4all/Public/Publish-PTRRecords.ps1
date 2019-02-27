@@ -5,8 +5,7 @@ Function Publish-PTRRecords {
         [Parameter(Mandatory=$true,
         Position=1)]
         [ValidateNotNullOrEmpty()]
-        [String]
-        $ZoneName
+        [String]$ZoneName
     )
     process {
         try {

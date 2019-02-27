@@ -5,13 +5,12 @@ Function Get-ComputerSite {
         [Parameter(Mandatory=$true,
         Position=1)]
         [ValidateNotNullOrEmpty()]
-        [string]
-        $ComputerName
+        [string]$ComputerName
     )
     process {
         try {
             $SiteName = (Invoke-Command -ComputerName $ComputerName -ScriptBlock {
-                (Get-ItemProperty "HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Group Policy\State\Machine" -Name "Site-Name").'site-name'
+                (Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Group Policy\State\Machine' -Name 'Site-Name').'site-name'
             } -ErrorAction Stop)
             $FoundSite = [PSCustomObject]@{
                 ComputerName = $ComputerName

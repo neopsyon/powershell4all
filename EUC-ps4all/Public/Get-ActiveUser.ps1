@@ -31,12 +31,14 @@ Function Get-ActiveUser {
             foreach ($User in $GetUsers) {
                 $Username = ($User.substring(1)).split(" ")[0]
                 [datetime]$LogonTime = ($User.Substring(65))
+                [string]$Status = ($User.Substring(46,6).trim())
                 [void]$Userlist.Add($Username)
             }
             $Finallist = [PSCustomObject]@{
                 Hostname = $ComputerName
-                Activeuser = $Userlist -join ","
+                Username = $Userlist -join ","
                 LogonTime = $LogonTime
+                Status = $Status
             }
             $Finallist
         }

@@ -1,22 +1,20 @@
 <#
 #>
 Function Get-ADSensitiveGroupMembership {
-    [CmdletBinding(DefaultParameterSetName="All")]
+    [CmdletBinding(DefaultParameterSetName='All')]
     param (
         # Parameter to get membership of all sensitive AD groups.
         [Parameter(Mandatory=$false,
-        ParameterSetName="All")]
-        [switch]
-        $All,
+        ParameterSetName='All')]
+        [switch]$All,
         # Parameter help description
         [Parameter(Mandatory=$false,
-        ParameterSetName="GroupName")]
-        [ValidateSet("Administrators","Domain Admins","Enterprise Admins","Schema Admins")]
-        [string]
-        $GroupName
+        ParameterSetName='GroupName')]
+        [ValidateSet('Administrators','Domain Admins','Enterprise Admins','Schema Admins')]
+        [string]$GroupName
     )
     process {
-        $GroupList = @("Administrators","Domain Admins","Enterprise Admins","Schema Admins")
+        $GroupList = @('Administrators','Domain Admins','Enterprise Admins','Schema Admins')
         Function Get-Membership {
             [CmdletBinding()]
             param (
@@ -34,8 +32,8 @@ Function Get-ADSensitiveGroupMembership {
                     $Members = (Get-ADGroupMember -Identity "$Group").SamAccountName
                      if ($false -eq [string]::IsNullOrWhiteSpace($Member)) {
                          $TempObject = [PSCustomObject]@{
-                             GroupName = "$Group"
-                             Members = $Members -join ","
+                             GroupName = $Group
+                             Members = $Members -join ','
                          }
                          [void]$GroupMembers.Add($TempObject)
                      }
@@ -43,7 +41,7 @@ Function Get-ADSensitiveGroupMembership {
                 $GroupMembers
             }
         }
-        if ($PSCmdlet.ParameterSetName -eq "All") {
+        if ($PSCmdlet.ParameterSetName -eq 'All') {
             $Groupedobjects = New-Object System.Collections.ArrayList
             foreach ($Group in $GroupList) {
                 $Getit = Get-Membership -Group $Group
@@ -51,7 +49,7 @@ Function Get-ADSensitiveGroupMembership {
             }
             $Groupedobjects
         }
-        elseif ($PSCmdlet.ParameterSetName -eq "GroupName") {
+        elseif ($PSCmdlet.ParameterSetName -eq 'GroupName') {
             foreach ($Group in $GroupList) {
                 if ($GroupName -eq $Group) {
                     Get-Membership -Group $GroupName
