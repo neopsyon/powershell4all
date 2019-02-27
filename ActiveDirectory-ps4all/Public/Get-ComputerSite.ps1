@@ -5,7 +5,7 @@ Function Get-ComputerSite {
         [Parameter(Mandatory=$true,
         Position=1)]
         [ValidateNotNullOrEmpty()]
-        [string]$ComputerName
+        [string]$ComputerName = $env:ComputerName
     )
     process {
         try {
