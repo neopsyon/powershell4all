@@ -2,19 +2,20 @@ Function Get-ComputerSite {
     [CmdletBinding()]
     param (
         # Name of the target computer.
-        [Parameter(ValueFromPipelineByPropertyName=$true,
+        [Parameter(ValueFromPipeline=$true,
+        ValueFromPipelineByPropertyName=$true,
         Position=0)]
         [ValidateNotNullOrEmpty()]
-        [Alias('Computer','Name')]
-        [string]$ComputerName = $env:ComputerName
+        [Alias('Computer','ComputerName')]
+        [string]$Name = $env:ComputerName
     )
     process {
         try {
-            $SiteName = (Invoke-Command -ComputerName $ComputerName -ScriptBlock {
+            $SiteName = (Invoke-Command -ComputerName $Name -ScriptBlock {
                 (Get-ItemProperty 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Group Policy\State\Machine' -Name 'Site-Name').'site-name'
             } -ErrorAction Stop)
             $FoundSite = [PSCustomObject]@{
-                ComputerName = $ComputerName
+                ComputerName = $Name
                 SiteName = $SiteName
             }
             $FoundSite
