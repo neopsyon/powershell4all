@@ -1,21 +1,19 @@
 Function Get-ADSiteDetail {
-    [CmdletBinding(DefaultParameterSetName="All")]
+    [CmdletBinding(DefaultParameterSetName='All')]
     param (
         # Parameter to check all of the AD sites.
         [Parameter(Mandatory=$false,
-        ParameterSetName="All")]
-        [switch]
-        $All,
+        ParameterSetName='All')]
+        [switch]$All,
         # Name of the specific AD site.
         [Parameter(Mandatory=$false,
-        ParameterSetName="SiteName",
+        ParameterSetName='SiteName',
         Position=1)]
         [ValidateNotNullOrEmpty()]
-        [string]
-        $SiteName
+        [string]$SiteName
     )
     process {
-        if ($psCmdlet.ParameterSetName -eq "All") {
+        if ($psCmdlet.ParameterSetName -eq 'All') {
         $SiteList = [System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest().sites
         $SiteDetails = New-Object System.Collections.ArrayList
         foreach ($Site in $SiteList) {
@@ -28,7 +26,7 @@ Function Get-ADSiteDetail {
         }
         $SiteDetails | Format-Table -AutoSize -Wrap
         }
-        elseif ($psCmdlet.ParameterSetName -eq "SiteName") {
+        elseif ($psCmdlet.ParameterSetName -eq 'SiteName') {
             $SiteList = [System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest().sites | Where-Object {$_.Name -eq "$SiteName"}
             $SiteDetails = New-Object System.Collections.ArrayList
             foreach ($Site in $SiteList) {

@@ -5,8 +5,7 @@ Function Get-DNSSuffix {
         [Parameter(Mandatory=$true,
         Position=1)]
         [ValidateNotNullOrEmpty()]
-        [string]
-        $ComputerName
+        [string]$ComputerName
     )
     process {
         try {

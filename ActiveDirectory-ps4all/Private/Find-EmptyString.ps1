@@ -1,16 +1,13 @@
 Function Find-EmptyString {
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true,
-        Position=1)]
+        [Parameter(Mandatory=$true)]
         [AllowEmptyString()]
         [string]$VariableName,
-        [Parameter(Mandatory=$true,
-        Position=2)]
+        [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [string]$ErrorOut,
-        [Parameter(Mandatory=$true,
-        Position=3)]
+        [Parameter(Mandatory=$true)]
         [ValidateSet("Continue","Stop")]
         [string]$Action
     )

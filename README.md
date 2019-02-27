@@ -1,7 +1,7 @@
 # Powershell4all
 The idea of this project is an open collaboration between skilled Powershell professionals, who are integrating the usual daily tasks of a Microsoft System Administrator into functions.
 
-The Powershell4All project is divided into a modules, which contain functions for one specific area.
+The Powershell4All project is divided into modules, which contain functions for one specific area.
 
 At the moment we have only one module published, but many are on the way.
 
@@ -20,9 +20,6 @@ If you notice any bugs or you have any advice for improvements, please CONTRIBUT
 Project Details:
 
 	Start Date: 02-05-2018
-
-	Version: 1
-
 
 Contact:
 
