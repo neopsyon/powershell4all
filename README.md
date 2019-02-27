@@ -1,5 +1,5 @@
 # Powershell4all
-The idea of this project is an open collaboration between skilled Powershell professionals, who are integrating the usual daily tasks of a Microsoft System Administrator into functions.
+The idea of this project is an open collaboration between skilled Powershell professionals, who are integrating the usual daily tasks of a Microsoft System Administrator into functions and modules.
 
 The Powershell4All project is divided into modules, which contain functions for one specific area.
 
