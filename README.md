@@ -3,8 +3,6 @@ The idea of this project is an open collaboration between skilled Powershell pro
 
 The Powershell4All project is divided into modules, which contain functions for one specific area.
 
-At the moment we have only one module published, but many are on the way.
-
 Functions are here to serve their user(admin) with the ease of administration.
 
 This collaboration project is open, anyone who is willing to contribute is very WELCOME, please fork our project and submit a pull request.
