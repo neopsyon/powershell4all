@@ -28,7 +28,7 @@ Function Get-ADSensitiveGroupMembership {
             )
             process {
                 $GroupMembers = New-Object System.Collections.ArrayList
-                $CheckExistence = (Get-ADGroup -Filter * | Where-Object {$_.Name -eq "$Group"})
+                $CheckExistence = (Get-ADGroup -Filter "Name -eq '$Group'")
                 Find-EmptyString -VariableName $CheckExistence -ErrorOut "Cannot find an group object with the name $Group in $env:USERDNSDOMAIN" -Action Continue
                 if ($false -eq [string]::IsNullOrEmpty($CheckExistence)) {
                     $Members = (Get-ADGroupMember -Identity "$Group").SamAccountName
