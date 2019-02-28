@@ -24,7 +24,8 @@ Function Invoke-ADReplication {
                 } -InDisconnectedSession -ErrorAction Stop)
             }
             catch {
-                Write-Error "$_"
+                Write-Error -Exception $PSItem.Exception -Message $PSItem.Exception.Message
+                Break
             }
         }
     }
@@ -40,7 +41,7 @@ Function Invoke-ADReplication {
                 } -InDisconnectedSession -ErrorAction Stop)
             }
             catch {
-                Write-Error "$_"
+                Write-Error -Exception $PSItem.Exception -Message $PSItem.Exception.Message
             }
         }    
     }
