@@ -13,7 +13,7 @@ Function Find-OrphanedComputer {
             Write-Output "There are not orphaned computer objects in $env:USERDNSDOMAIN"
         }
         else {
-            $Orphanedlist = New-Object System.Collections.ArrayList
+            $Orphanedlist = [System.Collections.ArrayList]::new()
             foreach ($Computer in $Computerlist) {
                 $TempObject = [PSCustomObject]@{
                     ComputerName = $($Computer.Name)

@@ -25,7 +25,7 @@ Function Get-ADSensitiveGroupMembership {
                 $Group
             )
             process {
-                $GroupMembers = New-Object System.Collections.ArrayList
+                $GroupMembers = [System.Collections.ArrayList]::new()
                 $CheckExistence = (Get-ADGroup -Filter "Name -eq '$Group'")
                 Find-EmptyString -VariableName $CheckExistence -ErrorOut "Cannot find an group object with the name $Group in $env:USERDNSDOMAIN" -Action Continue
                 if ($false -eq [string]::IsNullOrWhiteSpace($CheckExistence)) {
@@ -42,7 +42,7 @@ Function Get-ADSensitiveGroupMembership {
             }
         }
         if ($PSCmdlet.ParameterSetName -eq 'All') {
-            $Groupedobjects = New-Object System.Collections.ArrayList
+            $Groupedobjects = [System.Collections.ArrayList]::new()
             foreach ($Group in $GroupList) {
                 $Getit = Get-Membership -Group $Group
                 [void]$Groupedobjects.Add($Getit)

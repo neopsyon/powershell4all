@@ -37,7 +37,7 @@ Function Search-GPOForString {
         [string]$String
     )
     begin {
-        $GpoCollection = New-Object System.Collections.ArrayList
+        $GpoCollection = [System.Collections.ArrayList]::new()
     }
     process {
         $AllGObjects = (Get-GPO -All -Domain $env:USERDNSDOMAIN)

@@ -14,8 +14,8 @@ Function Publish-PTRRecords {
             $FindTheZone = (Get-DNSServerZone -ComputerName $DomainController -Name "$ZoneName" -ErrorAction Stop).ZoneName
             $ARecords = (Get-DnsServerResourceRecord -ComputerName $DomainController -RRType A -ZoneName "$FindTheZone" | Where-Object {$_.HostName -notlike '*DNSZones*' -and $_.HostName -notlike '*@*'} `
             | Select-Object HostName,@{Name="IPAddress";Expression={$_.RecordData.IPv4Address}} -ErrorAction Stop)
-            $AggregatedSubnets = New-Object System.Collections.ArrayList
-            $ReversedZones = New-Object System.Collections.ArrayList
+            $AggregatedSubnets = [System.Collections.ArrayList]::new()
+            $ReversedZones = [System.Collections.ArrayList]::new()
             foreach ($Record in $ARecords) {
                 $FullAddress = $($Record.IPAddress.ipaddresstostring)
                 $LastOctet = $($FullAddress).Split(".")[3]

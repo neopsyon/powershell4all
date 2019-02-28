@@ -48,7 +48,7 @@ Function Get-CurrentUser {
             Test-QuickConnect -Name $Machine
             try {
             $GetUsers = Invoke-Command -ComputerName $Machine -ScriptBlock {quser | Select-Object -skip 1} -ErrorAction Stop
-            $Finallist = New-Object System.Collections.ArrayList
+            $Finallist = [System.Collections.ArrayList]::new()
             foreach ($User in $GetUsers) {
                 $Username = ($User.substring(1)).split(" ")[0]
                 [datetime]$LogonTime = ($User.Substring(65))

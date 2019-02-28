@@ -15,7 +15,7 @@ Function Get-ADSiteDetail {
     process {
         if ($psCmdlet.ParameterSetName -eq 'All') {
         $SiteList = [System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest().sites
-        $SiteDetails = New-Object System.Collections.ArrayList
+        $SiteDetails = [System.Collections.ArrayList]::new()
         foreach ($Site in $SiteList) {
             $TempObject = [PSCustomObject]@{
                 SiteName = $($Site.Name)
@@ -28,7 +28,7 @@ Function Get-ADSiteDetail {
         }
         elseif ($psCmdlet.ParameterSetName -eq 'SiteName') {
             $SiteList = [System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest().sites | Where-Object {$_.Name -eq "$SiteName"}
-            $SiteDetails = New-Object System.Collections.ArrayList
+            $SiteDetails = [System.Collections.ArrayList]::new()
             foreach ($Site in $SiteList) {
                 $TempObject = [PSCustomObject]@{
                     SiteName = $($Site.Name)
