@@ -3,7 +3,7 @@ Function Find-EmptyString {
     param (
         [Parameter(Mandatory=$true)]
         [AllowEmptyString()]
-        [string]$VariableName,
+        $VariableName,
         [Parameter(Mandatory=$true)]
         [ValidateNotNullOrEmpty()]
         [string]$ErrorOut,
