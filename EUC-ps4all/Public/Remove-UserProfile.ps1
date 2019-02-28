@@ -37,7 +37,7 @@ Function Remove-UserProfile {
         }
     }
     process {
-        [System.Collections.ArrayList]$IdList = @()
+        $IdList = [System.Collections.ArrayList]::new()
         try {
             # Check if the user has active sessions and kill them if any.
             [array]$SessionId = (quser /SERVER:$ComputerName 2>$null) | Select-String "$UserName " -ErrorAction Stop
