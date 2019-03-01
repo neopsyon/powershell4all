@@ -1,9 +1,9 @@
 Function Test-Ldaps {
     [cmdletbinding()]
     param (
-        [parameter(Mandatory)]
-        [string]
-        $DC
+        [parameter(Mandatory=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$DC
     )
     process {
         try {
