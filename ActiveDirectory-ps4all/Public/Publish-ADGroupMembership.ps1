@@ -1,3 +1,23 @@
+<#
+.SYNOPSIS
+Transfering copy of members from one to another group. 
+
+.DESCRIPTION
+Function which is cloning members from one to another Active Directory group.
+
+.PARAMETER SourceGroup
+Name of the group from where you want to copy the members.
+
+.PARAMETER DestinationGroup
+Name of the destination group to where you want to copy the members.
+
+.EXAMPLE
+Publish-ADGroupMembership -SourceGroup Group1 -DestinationGroup Group2
+
+.INPUTS
+System.String
+System.Array
+#>
 Function Publish-ADGroupMembership {
     [CmdletBinding()]
     param (
