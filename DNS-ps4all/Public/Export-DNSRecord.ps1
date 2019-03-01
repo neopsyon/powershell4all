@@ -26,6 +26,6 @@ Function Export-DNSRecord {
             }
         }
         process {
-            
+            if ($PSCmdlet.ParameterSetName -eq "All")
         }
 }
