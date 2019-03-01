@@ -1,14 +1,34 @@
+<#
+.SYNOPSIS
+Invokes replication against domain controller.
+
+.DESCRIPTION
+Invokes replication of all Active Directory partitions, against specific Domain Controller, or all Domain Controllers found in the domain.
+
+.PARAMETER All
+Parameter to search and invoke replication against all Domain Controllers.
+
+.PARAMETER DomainController
+Parameter to search and invoke replicaiton against specific Domain Controller.
+
+.EXAMPLE
+Invoke-ADReplication -All
+
+.EXAMPLE
+Invoke-ADReplication -DomainController AD-DC01
+
+.INPUTS
+System.String
+#>
 Function Invoke-ADReplication {
     [CmdletBinding(DefaultParameterSetName='All')]
     param (
         # Parameter to invoke replication against all Domain Controllers.
-        [Parameter(Mandatory=$false,
-        ParameterSetName='All')]
+        [Parameter(ParameterSetName='All')]
         [switch]$All,
         # Name of the specific Domain Controller.
-        [Parameter(Mandatory=$false,
-        ParameterSetName='DomainController',
-        Position=1)]
+        [Parameter(ParameterSetName='DomainController',
+        Position=0)]
         [string]$DomainController
     )
     process {
