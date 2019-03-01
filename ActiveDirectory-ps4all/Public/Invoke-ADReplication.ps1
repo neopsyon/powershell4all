@@ -37,6 +37,7 @@ Function Invoke-ADReplication {
         $LastRepTime = (Get-ADReplicationUpToDatenessVectorTable -Target $DomainControllers[0]).LastReplicationSuccess[0]
         Write-Output "Last replication time was at - $LastRepTime"
         foreach ($DC in $DomainControllers) {
+            Test-QuickConnect -Name $DC
             try {
                 Write-Output "Invoking replication against $DC"
                 [void](Invoke-Command -ComputerName $DC -ScriptBlock {
@@ -52,6 +53,7 @@ Function Invoke-ADReplication {
         elseif ($PSCmdlet.ParameterSetName -eq 'DomainController') {
             $FindDomainController = (Get-ADDomainController -filter * | Where-Object {$_.Name -eq $DomainController}).Name
             Find-EmptyString -VariableName $FindDomainController -ErrorOut "Cannot an find Domain Controller object that matches name $($DomainController)" -Action Stop
+            Test-QuickConnect -Name $FindDomainController
             $LastRepTime = (Get-ADReplicationUpToDatenessVectorTable -Target $FindDomainController).LastReplicationSuccess[0]
             Write-Output "Last replication time was at - $LastRepTime"
             try {

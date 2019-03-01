@@ -1,31 +1,39 @@
 Function Export-DNSRecord {
         [CmdletBinding()]
         param (
-            # Parameter help description
-            [Parameter()]
+            [Parameter(ParameterSetName="All")]
             [ValidateNotNullOrEmpty()]
             [switch]$All,
-            # Parameter help description
-            [Parameter()]
+            #
+            [Parameter(ParameterSetName="Single")]
             [ValidateSet('A','AAA','PTR','CNAME')]
             [Alias('Type')]
-            [switch]$RRType,
-            # Parameter help description
+            [string]$RRType,
+            #
             [Parameter(Mandatory=$true)]
             [ValidateNotNullOrEmpty()]
             [Alias('ZoneName')]
-            [string]$Zone
+            [string]$Zone,
+            #
+            [Parameter(Mandatory=$true)]
+            [ValidateNotNullOrEmpty()]
+            [string]$Path
         )
         begin {
             [array]$DC = (Get-ADDomainController -Filter *).Name
             try {
-                (Get-DNSServerZone -ComputerName $DC[0] -Name $Zone -ErrorAction Stop)
+                [void](Get-DNSServerZone -ComputerName $DC[0] -Name $Zone -ErrorAction Stop)
             }
             catch {
                 Write-Error "$_" -ErrorAction Stop
             }
         }
         process {
-            if ($PSCmdlet.ParameterSetName -eq "All")
+            if ($PSCmdlet.ParameterSetName -eq "All") {
+
+            }
+            elseif ($PSCmdlet.ParameterSetName -eq "Single") {
+
+            }
         }
 }
