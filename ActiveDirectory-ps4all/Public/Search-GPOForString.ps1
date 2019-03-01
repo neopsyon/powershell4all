@@ -25,7 +25,6 @@ System.String
 .OUTPUTS
 PSCustomObject
 #>
-
 Function Search-GPOForString {
     [CmdletBinding()]
     [OutputType([pscustomobject])]

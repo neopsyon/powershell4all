@@ -1,6 +1,9 @@
 <#
 .SYNOPSIS 
-Removes a user profile from computer, both from registry and users path, if any of those is present.
+Removes a user profile from the computer.
+
+.DESCRIPTION
+Removes a user profile, both from registry and users path, if any of those is present.
 
 .PARAMETER UserName
 Specifies the name of the user which profile is supposed to be removed.
