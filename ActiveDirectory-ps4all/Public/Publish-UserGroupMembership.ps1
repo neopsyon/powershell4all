@@ -1,3 +1,22 @@
+<#
+.SYNOPSIS
+Cloning user group membership.
+
+.DESCRIPTION
+Function is cloning group membership from one user to another, once completed destination user will have same group membership as a source.
+
+.PARAMETER SourceUser
+Name of the user from where you want to copy the group membership.
+
+.PARAMETER DestinationUser
+Name of the user to where you want to copy the group membership.
+
+.EXAMPLE
+Publish-UserGroupMembership -SourceUser nemanja.jovic -DestinationUser teodora.jovic
+
+.INPUTS
+System.String
+#>
 Function Publish-UserGroupMembership {
     [CmdletBinding()]
     param (
@@ -19,7 +38,7 @@ Function Publish-UserGroupMembership {
         $DestinationUser = $($FindDestination.SamAccountName)
         $SourceGroups = (Get-ADPrincipalGroupMembership -Identity $SourceUser).Name | Sort-Object
         if ($true -eq [string]::IsNullOrWhiteSpace("$SourceGroups")) {
-            Write-Output 'User is not member of any group.' -ErrorAction Stop
+            Write-Warning 'User is not member of any group.' -ErrorAction Stop
         }
         $DestinationGroups = (Get-ADPrincipalGroupMembership -Identity $DestinationUser).Name | Sort-Object
         $GroupDifference = (Compare-Object -ReferenceObject $SourceGroups -DifferenceObject $DestinationGroups)

@@ -1,3 +1,23 @@
+<#
+.SYNOPSIS
+Find AD partition based on your choice.
+
+.DESCRIPTION
+Function that queries Active Directory objects and finds out exact name of the partition, based on user input.
+
+.PARAMETER PartitionName
+Name of the partition that you want to search for.
+
+.EXAMPLE
+PS C:\> Find-ADPartition -PartitionName Configuration
+CN=Configuration,DC=domain,DC=local
+
+.INPUTS
+System.String
+
+.OUTPUTS
+System.String
+#>
 Function Find-ADPartition {
     [CmdletBinding()]
     [OutputType([string])]
