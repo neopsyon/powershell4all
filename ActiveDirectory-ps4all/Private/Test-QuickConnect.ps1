@@ -3,10 +3,16 @@
 Checking if remote computer is reachable.
 
 .DESCRIPTION
-Querying remote computer with the ping request, in case it is not responding, it will write an warning message and skip further actions against that computer.
+Querying remote computer with the fast ping request, in case it is not responding, it will write an warning message and skip further actions against that computer.
 
 .PARAMETER Name
 Name of the computer that you want to query.
+
+.PARAMETER Count
+Number of pings that you want to perform.
+
+.PARAMETER Delay
+Number of miliseconds that you want to pause between ping requests.
 
 .EXAMPLE
 Test-NetConnect -Name ComputerName
@@ -24,12 +30,18 @@ Function Test-QuickConnect {
         [Parameter()]
         [ValidateNotNullOrEmpty()]
         [Alias('Computer','ComputerName')]
-        [string]$Name
+        [string]$Name,
+        [int]$Count = 2,
+        [int]$Delay = 100
     )
     process {
-        if ($false -eq (Test-Connection -ComputerName $Name -Count 1 -Quiet)) {
-            Write-Warning ('[{0}] : Unable to connect to computer. Skipping.' -F $Name)
-            Continue
+        for ($I = 1; $I -lt $Count + 1 ; $i++) {
+            If (Test-Connection -ComputerName $Name -Quiet -Count 1) {
+                return $True
+            }
+            Start-Sleep -Milliseconds $Delay
         }
+        Write-Warning ("[$Name] : Unable to connect to computer. Skipping.")
+        Continue
     }
 }
