@@ -75,6 +75,9 @@ Function Get-CmdletDetail {
                                 ParameterSet  = $CmdletStructure.ParameterSets.keys -join ','
                                 ParameterType = ($CmdletStructure.ParameterType.Name)
                                 Aliases       = ($CmdletStructure.Aliases -join ',').Trim('{}')
+                                Position = $(if ($FindParameterObject.Position -eq '-2147483648') {$false} else {$FindParameterObject.Position})
+                                ValueFromPipeline = $FindParameterObject.ValueFromPipeline
+                                ValueFromPipelineByPropertyName = $FindParameterObject.ValueFromPipelineByPropertyName
                             }
                         }
                     }
