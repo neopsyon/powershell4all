@@ -98,7 +98,7 @@ Function Get-CmdletDetail {
                         [void]$AliasCollection.Add($AliasParameterOut)
                     }
                 }
-                $AliasCollection | Sort-Object -Property ParameterSet
+                $AliasCollection | Sort-Object -Property ParameterSet,AliasName
             }
             'ParameterSet' {
                 $ParameterSetCollection = [System.Collections.ArrayList]::new()
@@ -112,7 +112,7 @@ Function Get-CmdletDetail {
                     }
                     [void]$ParameterSetCollection.Add($ParameterSetOut)
                 }
-                $ParameterSetCollection | Sort-Object -Property ParameterSet
+                $ParameterSetCollection | Sort-Object -Property ParameterSet,ParameterName
             }
         }
     }
