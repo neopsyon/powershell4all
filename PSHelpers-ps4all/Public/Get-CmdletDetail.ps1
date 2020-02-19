@@ -31,6 +31,10 @@ Get-CmdletDetail -Cmdlet Get-Service -AliasParameter
 .EXAMPLE
 Get-CmdletDetail -Function Set-CustomThing
 
+.NOTES
+    Author: Nemanja Jovic
+    Site: powerhero.tech
+    Year: 2020
 #>
 Function Get-CmdletDetail {
     [CmdletBinding(DefaultParameterSetName = 'MandatoryParameter')]

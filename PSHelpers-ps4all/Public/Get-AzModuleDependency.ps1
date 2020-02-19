@@ -10,26 +10,26 @@ Function Get-AzModuleDependency {
     )
     begin {
         $ErrorActionPreference = 'Stop'
-        foreach ($File in $ModuleFile) {
+        foreach ($file in $ModuleFile) {
             if ($false -eq $(test-path $File)) {
-                Write-Error "Cannot find the file $File" -RecommendedAction "Make sure that the file exists."
+                Write-Error "Cannot find the file $File" -RecommendedAction "Make sure that the file exists." -ErrorAction Stop
             }
         }
     }
     process {
-        foreach ($File in $ModuleFile) {
+        foreach ($file in $ModuleFile) {
             switch -Regex ($File) {
                 '.psm1' {
                     # Find text without module version
-                    $GetModule = Get-Content -Path $File | Select-String 'Import-Module'
-                    if ($GetModule) {
+                    $getModule = Get-Content -Path $File | Select-String 'Import-Module'
+                    if ($getModule) {
                         # Find text with module version
-                        $GetModuleVersion = $GetModule | select-string 'Version'
-                        if ($GetModuleVersion) {
-                            foreach ($line in $GetModuleVersion) {
-                                $CodeAst = [System.Management.Automation.Language.Parser]::ParseInput($line, [ref]$null, [ref]$null)
-                                $CommandAst = $CodeAst.Find( { $args[0] -is [System.Management.Automation.Language.CommandAst] }, $true)
-                                $BindingResult = [System.Management.Automation.Language.StaticParameterBinder]::BindCommand($CommandAst, $true)
+                        $getModuleVersion = $getModule | select-string 'Version'
+                        if ($getModuleVersion) {
+                            foreach ($line in $getModuleVersion) {
+                                $codeAst = [System.Management.Automation.Language.Parser]::ParseInput($line, [ref]$null, [ref]$null)
+                                $commandAst = $codeAst.Find( { $args[0] -is [System.Management.Automation.Language.CommandAst] }, $true)
+                                $bindingResult = [System.Management.Automation.Language.StaticParameterBinder]::BindCommand($commandAst, $true)
                                 [PSCustomObject]@{
                                     ModuleName    = $BindingResult.BoundParameters.Name.ConstantValue
                                     ModuleVersion = $BindingResult.BoundParameters.MinimumVersion.ConstantValue
@@ -37,6 +37,15 @@ Function Get-AzModuleDependency {
                             }
                         }
                         else {
+                            foreach ($line in $getModule) {
+                                $codeAst = [System.Management.Automation.Language.Parser]::ParseInput($line, [ref]$null, [ref]$null)
+                                $commandAst = $codeAst.Find( { $args[0] -is [System.Management.Automation.Language.CommandAst] }, $true)
+                                $bindingResult = [System.Management.Automation.Language.StaticParameterBinder]::BindCommand($commandAst, $true)
+                                [PSCustomObject]@{
+                                    ModuleName    = $BindingResult.BoundParameters.Name.ConstantValue
+                                    ModuleVersion = $BindingResult.BoundParameters.MinimumVersion.ConstantValue
+                                }
+                            }
                         }
                     }
                 }
